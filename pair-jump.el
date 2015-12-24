@@ -1,17 +1,19 @@
 
 (defun pair-jump-or-tab ()
   (interactive)
-  (indent-for-tab-command)
+
   (let ((after-char (string (char-after)))
         (before-char (string (char-before))))
     (cond ((or (equal after-char "(")
                (equal after-char "{")
                (equal after-char "["))
            (forward-sexp))
-          ((or (equal after-char ")")
-               (equal after-char "}")
-               (equal after-char "]"))
-           (backward-sexp)))))
+          ((or (equal before-char ")")
+               (equal before-char "}")
+               (equal before-char "]"))
+           (backward-sexp))
+          (t
+           (indent-for-tab-command)))))
                                         ;(thing-at-point 'char)
 
 (global-set-key [tab] 'pair-jump-or-tab)
